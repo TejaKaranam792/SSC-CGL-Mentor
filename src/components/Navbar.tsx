@@ -9,7 +9,7 @@ import { getStrictMode, setStrictMode } from "@/lib/storage";
 import { useTheme } from "@/lib/theme";
 
 const navLinks = [
-  { href: "/",          label: "Log Test",  icon: PlusCircle },
+  { href: "/dashboard", label: "Log Test",  icon: PlusCircle },
   { href: "/readiness", label: "Readiness", icon: Zap        },
   { href: "/clarity",   label: "Clarity",   icon: Compass    },
   { href: "/history",   label: "Analytics", icon: BarChart2  },
@@ -34,6 +34,8 @@ export function Navbar() {
   };
 
   const isLight = theme === "light";
+
+  if (pathname === "/") return null;
 
   return (
     <>
