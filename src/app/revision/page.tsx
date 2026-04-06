@@ -200,7 +200,7 @@ export default function RevisionPage() {
       <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] rounded-full bg-primary/[0.04] pointer-events-none" />
       <div className="absolute bottom-[-5%] right-[-5%] w-[35%] h-[35%] rounded-full bg-emerald-900/10 pointer-events-none" />
 
-      <main className="relative z-10 max-w-2xl mx-auto px-5 py-14 md:py-20 space-y-8">
+      <main className="relative z-10 max-w-2xl mx-auto px-4 sm:px-5 py-8 sm:py-14 md:py-20 space-y-6 sm:space-y-8">
 
         {/* ── Page Header ──────────────────────────────────── */}
         <motion.div variants={itemVars} initial="hidden" animate="show" className="space-y-3">
@@ -208,7 +208,7 @@ export default function RevisionPage() {
             <Brain className="w-3.5 h-3.5" />
             Smart Revision Tracker
           </div>
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-foreground">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-foreground leading-tight">
             1 → 3 → 7 Retention System
           </h1>
           <p className="text-muted-foreground text-sm leading-relaxed max-w-md font-medium">

@@ -28,15 +28,15 @@ export function MentorResponseCards({ feedback }: { feedback: MentorFeedback | n
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
 
       {/* ── Mentor Verdict (centered quote) ─────────────────────────────── */}
-      <div className="relative bg-card border border-border rounded-2xl p-8 sm:p-10 overflow-hidden text-center shadow-sm">
+      <div className="relative bg-card border border-border rounded-2xl p-6 sm:p-8 md:p-10 overflow-hidden text-center shadow-sm">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent/[0.02] to-transparent pointer-events-none" />
         <div className="relative z-10">
-          <div className="flex items-center justify-center gap-2 mb-5">
+          <div className="flex items-center justify-center gap-2 mb-4">
             <Activity className="w-4 h-4 text-primary" />
             <span className="text-xs font-black tracking-[0.2em] text-primary uppercase">Mentor Verdict</span>
           </div>
-          <p className="text-white text-2xl md:text-3xl font-black leading-tight max-w-2xl mx-auto">
+          <p className="text-foreground text-xl sm:text-2xl md:text-3xl font-black leading-tight max-w-2xl mx-auto">
             &ldquo;{feedback.mentorMessage}&rdquo;
           </p>
         </div>
@@ -76,17 +76,17 @@ export function MentorResponseCards({ feedback }: { feedback: MentorFeedback | n
       </div>
 
       {/* ── 1-Day Fix Protocol with Checkboxes ─────────────────────────── */}
-      <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-xl overflow-hidden relative">
+      <div className="bg-card border border-border rounded-2xl p-5 sm:p-8 shadow-xl overflow-hidden relative">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-transparent to-transparent" />
 
         {/* Header + Progress */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 sm:mb-7">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary rounded-xl border border-border">
+            <div className="p-2 bg-primary rounded-xl border border-border shrink-0">
               <Target className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h3 className="text-lg font-black text-foreground">1-Day Fix Protocol</h3>
+              <h3 className="text-base sm:text-lg font-black text-foreground">1-Day Fix Protocol</h3>
               <p className="text-xs text-muted-foreground font-medium">Click tasks to mark complete</p>
             </div>
           </div>

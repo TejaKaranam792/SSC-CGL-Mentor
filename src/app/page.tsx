@@ -62,7 +62,7 @@ export default function Home() {
       <div className="absolute top-[-15%] left-[-10%] w-[45%] h-[45%] rounded-full bg-primary/[0.04] hidden pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] rounded-full bg-indigo-900/10 hidden pointer-events-none" />
 
-      <main className="relative z-10 flex flex-col items-center flex-1 max-w-2xl mx-auto w-full px-5 py-14 md:py-20 space-y-8">
+      <main className="relative z-10 flex flex-col items-center flex-1 max-w-2xl mx-auto w-full px-4 sm:px-5 py-8 sm:py-14 md:py-20 space-y-6 sm:space-y-8">
 
         {/* Page Header */}
         <motion.div variants={itemVars} initial="hidden" animate="show" className="text-center space-y-3 w-full">
@@ -70,7 +70,7 @@ export default function Home() {
             <Crown className="w-4 h-4" />
             AI Coaching Platform
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-foreground leading-tight">
             Log Your Performance
           </h1>
           <p className="text-muted-foreground text-sm leading-relaxed max-w-md mx-auto font-medium">

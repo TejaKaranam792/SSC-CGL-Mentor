@@ -57,20 +57,21 @@ export default function ReportPage() {
       {/* Study Mode Modal */}
       {studyOpen && <StudyModePanel feedback={feedback} onClose={() => setStudyOpen(false)} />}
 
-      <main className="relative z-10 max-w-4xl mx-auto px-5 pt-10">
+      <main className="relative z-10 max-w-4xl mx-auto px-4 sm:px-5 pt-6 sm:pt-10">
 
         {/* Back + Actions Row */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors font-bold text-sm tracking-wide font-semibold group">
-            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Dashboard
+        <div className="flex items-center justify-between mb-6 sm:mb-8 gap-3">
+          <Link href="/" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors font-bold text-sm tracking-wide group shrink-0">
+            <ArrowLeft className="w-4 h-4 mr-1.5 group-hover:-translate-x-1 transition-transform" />
+            <span className="hidden xs:block">Dashboard</span>
+            <span className="xs:hidden">Back</span>
           </Link>
           <button
             onClick={() => setStudyOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-primary border border-transparent hover:bg-blue-600 rounded-2xl text-white font-bold text-sm transition-all shadow-sm"
+            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-primary border border-transparent hover:bg-blue-600 rounded-2xl text-white font-bold text-sm transition-all shadow-sm"
           >
             <BookOpen className="w-4 h-4" />
-            Study Mode
+            <span>Study Mode</span>
           </button>
         </div>
 
@@ -80,7 +81,7 @@ export default function ReportPage() {
             <Crown className="w-3 h-3" />
             AI Mentor Report
           </div>
-          <h1 className="text-3xl md:text-5xl font-black text-foreground mb-4">Post-Assessment Briefing</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-foreground mb-4 leading-tight">Post-Assessment Briefing</h1>
 
           {/* Test Context Banner */}
           {perf && (

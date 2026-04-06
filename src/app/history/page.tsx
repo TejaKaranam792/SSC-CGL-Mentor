@@ -87,14 +87,14 @@ export default function HistoryPage() {
       <div className="absolute top-[-8%] right-[-8%] w-[40%] h-[40%] rounded-full bg-primary/[0.03] hidden pointer-events-none" />
       <div className="absolute bottom-[-8%] left-[-5%] w-[45%] h-[45%] rounded-full bg-indigo-900/10 hidden pointer-events-none" />
 
-      <main className="relative z-10 max-w-7xl mx-auto px-5 py-12 md:py-16 space-y-8">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-5 py-8 md:py-16 space-y-6 md:space-y-8">
 
         {/* ── Page Header ───────────────────────────── */}
-        <header className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <header className="flex flex-col gap-4">
           <div>
             <div className="flex items-center gap-2.5 mb-1">
               <BarChart2 className="w-5 h-5 text-primary" />
-              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-foreground">Analytics &amp; History</h1>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-foreground">Analytics &amp; History</h1>
             </div>
             <p className="text-muted-foreground text-sm font-medium pl-7">Your performance trajectory and coaching intelligence.</p>
           </div>
@@ -102,29 +102,30 @@ export default function HistoryPage() {
           {history.length > 0 && (
             <div className="flex items-center gap-2 flex-wrap">
               {/* Export */}
-              <button onClick={exportToCSV} className="flex items-center gap-2 px-4 py-2.5 bg-white/[0.04] border border-border rounded-2xl text-muted-foreground hover:text-foreground hover:bg-white/[0.07] transition-all text-sm font-bold">
+              <button onClick={exportToCSV} className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-white/[0.04] border border-border rounded-2xl text-muted-foreground hover:text-foreground hover:bg-white/[0.07] transition-all text-sm font-bold">
                 <Download className="w-4 h-4" />
-                Export CSV
+                <span className="hidden xs:block">Export CSV</span>
+                <span className="xs:hidden">Export</span>
               </button>
 
               {/* Goal Setter */}
               {editingGoal ? (
-                <div className="flex items-center gap-2 bg-card border border-border rounded-2xl px-3 py-2">
-                  <PenLine className="w-4 h-4 text-primary" />
+                <div className="flex items-center gap-2 bg-card border border-border rounded-2xl px-3 py-2 flex-1 min-w-0">
+                  <PenLine className="w-4 h-4 text-primary shrink-0" />
                   <input
                     type="number" autoFocus value={goalInput}
                     onChange={e => setGoalInput(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleSaveGoal()}
                     placeholder="Target score (max 200)"
-                    className="bg-transparent text-sm font-bold text-foreground w-44 outline-none placeholder:text-[#3A3A4A]"
+                    className="bg-transparent text-sm font-bold text-foreground w-full min-w-0 outline-none placeholder:text-[#3A3A4A]"
                   />
-                  <button onClick={handleSaveGoal} className="text-primary hover:text-blue-600">
+                  <button onClick={handleSaveGoal} className="text-primary hover:text-blue-600 shrink-0">
                     <Check className="w-4 h-4" />
                   </button>
                 </div>
               ) : (
                 <button onClick={() => { setEditingGoal(true); setGoalInput(goal?.toString() || ''); }}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-primary rounded-2xl text-white hover:bg-blue-600 transition-all text-sm font-bold shadow-sm">
+                  className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-primary rounded-2xl text-white hover:bg-blue-600 transition-all text-sm font-bold shadow-sm">
                   <PenLine className="w-4 h-4" />
                   {goal ? `Goal: ${goal}` : 'Set Goal'}
                 </button>
@@ -136,7 +137,7 @@ export default function HistoryPage() {
         {history.length > 0 ? (
           <motion.div variants={containerVars} initial="hidden" animate="show" className="space-y-8">
             {/* ── Stat Strip ─────────────────────────── */}
-            <motion.div variants={itemVars} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <motion.div variants={itemVars} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
               {[
                 {
                   title: 'Streak', value: streak, unit: 'days',
@@ -234,32 +235,32 @@ export default function HistoryPage() {
               <div className="space-y-2.5">
                 {reversed.map(perf => (
                   <Link href={`/report/${perf.id}`} key={perf.id} className="block group">
-                    <div className="bg-background border border-border rounded-2xl p-4 flex items-center justify-between group-hover:border-primary/50 group-hover:bg-card transition-all duration-200">
-                      <div className="flex items-center gap-3.5">
+                    <div className="bg-background border border-border rounded-2xl p-3 sm:p-4 flex items-center justify-between group-hover:border-primary/50 group-hover:bg-card transition-all duration-200 gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
                         <div className="hidden sm:flex w-10 h-10 shrink-0 rounded-xl bg-white/[0.04] border border-border items-center justify-center text-xs font-black text-muted-foreground">
                           {perf.testType === "full" ? "FM" : "S"}
                         </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <span className={cn("text-[10px] font-black uppercase tracking-wide font-semibold px-2.5 py-0.5 rounded-lg",
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
+                            <span className={cn("text-[10px] font-black uppercase tracking-wide px-2 py-0.5 rounded-lg whitespace-nowrap",
                               perf.testType === "full" ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/20" : "bg-primary/20 text-primary border-primary/40")}>
-                              {perf.testType === "full" ? "Full Mock" : `Sectional · ${perf.sectionalSubject?.toUpperCase()}`}
+                              {perf.testType === "full" ? "Full Mock" : `Sect · ${perf.sectionalSubject?.toUpperCase()}`}
                             </span>
-                            <span className="text-muted-foreground text-[11px]">
-                              {new Date(perf.date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                            <span className="text-muted-foreground text-[11px] whitespace-nowrap">
+                              {new Date(perf.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                             </span>
                           </div>
-                          <div className="text-xs text-muted-foreground mt-0.5">
-                            Weak: <span className="text-[#A0A0B0] font-medium">{perf.weakTopics || "—"}</span>
+                          <div className="text-xs text-muted-foreground truncate">
+                            <span className="text-[#A0A0B0] font-medium">{perf.weakTopics || "—"}</span>
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3.5 shrink-0">
+                      <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
                         <div className="text-right">
-                          <div className="text-lg font-black text-foreground">{perf.totalScore}</div>
+                          <div className="text-base sm:text-lg font-black text-foreground">{perf.totalScore}</div>
                           <div className="text-[10px] text-muted-foreground font-bold">/ {perf.testType === "full" ? 200 : 50}</div>
                         </div>
-                        <div className="w-8 h-8 rounded-full bg-white/[0.04] flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all shadow">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/[0.04] flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all shadow">
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </div>
                       </div>

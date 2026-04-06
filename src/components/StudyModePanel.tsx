@@ -83,12 +83,12 @@ export function StudyModePanel({ feedback, onClose }: StudyModePanelProps) {
   const pct = total ? Math.round((completed / total) * 100) : 0;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative bg-card border border-border rounded-[2rem] w-full max-w-lg shadow-sm overflow-hidden">
+    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative bg-card border border-border rounded-t-[2rem] sm:rounded-[2rem] w-full sm:max-w-lg shadow-2xl overflow-hidden max-h-[92dvh] flex flex-col animate-in slide-in-from-bottom-4 sm:slide-in-from-bottom-0 duration-300">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-transparent to-transparent" />
 
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
+        <div className="flex items-center justify-between px-5 sm:px-6 pt-5 sm:pt-6 pb-4 border-b border-border shrink-0">
           <div>
             <h2 className="text-lg font-black text-foreground">Study Mode</h2>
             <p className="text-xs text-muted-foreground font-medium">Pomodoro · Session #{session + 1}</p>
@@ -98,7 +98,7 @@ export function StudyModePanel({ feedback, onClose }: StudyModePanelProps) {
           </button>
         </div>
 
-        <div className="px-6 py-6 space-y-6">
+        <div className="px-5 sm:px-6 py-5 sm:py-6 space-y-5 overflow-y-auto" style={{ maxHeight: 'calc(92dvh - 80px)' }}>
           {/* Mode Toggle */}
           <div className="flex gap-2 bg-muted p-1 rounded-2xl border border-border">
             {(['work', 'break'] as const).map(m => (
