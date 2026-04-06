@@ -40,7 +40,7 @@ Strict requirements:
 - explanation must be clear, show the approach/shortcut, 2-4 sentences max`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-1.5-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
