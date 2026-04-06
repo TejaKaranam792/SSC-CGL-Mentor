@@ -1,64 +1,103 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { InputForm } from "@/components/InputForm";
+import { TodaysFocus } from "@/components/TodaysFocus";
+import { saveFeedback, savePerformance, SSCPerformance, getHistory, getFeedbackByPerformanceId, MentorFeedback, getStreak, getStrictMode } from "@/lib/storage";
+import { checkAndSyncBadges } from "@/lib/badges";
+import { Crown } from "lucide-react";
+
+const containerVars = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVars = {
+  hidden: { opacity: 0, y: 15 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } }
+};
 
 export default function Home() {
+  const [lastPerf, setLastPerf] = useState<SSCPerformance | null>(null);
+  const [lastFeedback, setLastFeedback] = useState<MentorFeedback | null>(null);
+  const [streak, setStreak] = useState(0);
+
+  useEffect(() => {
+    const history = getHistory();
+    if (history.length) {
+      const last = history[history.length - 1];
+      setLastPerf(last);
+      setLastFeedback(getFeedbackByPerformanceId(last.id));
+    }
+    setStreak(getStreak());
+    checkAndSyncBadges();
+  }, []);
+
+  const handleSubmit = async (data: Omit<SSCPerformance, "id" | "date">): Promise<string | void> => {
+    try {
+      const strictMode = getStrictMode();
+      const response = await fetch("/api/mentor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, strictMode }),
+      });
+
+      if (!response.ok) throw new Error("Failed connecting to Mentor");
+
+      const mentorResponse = await response.json();
+      const saved = savePerformance(data);
+      saveFeedback({ ...mentorResponse, performanceId: saved.id });
+      checkAndSyncBadges();
+      return saved.id;
+    } catch (error) {
+      console.error(error);
+      // Error handled inline by InputForm
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="relative min-h-full bg-background text-foreground overflow-hidden font-sans flex flex-col">
+      {/* Ambient Orbs */}
+      <div className="absolute top-[-15%] left-[-10%] w-[45%] h-[45%] rounded-full bg-primary/[0.04] hidden pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] rounded-full bg-indigo-900/10 hidden pointer-events-none" />
+
+      <main className="relative z-10 flex flex-col items-center flex-1 max-w-2xl mx-auto w-full px-5 py-14 md:py-20 space-y-8">
+
+        {/* Page Header */}
+        <motion.div variants={itemVars} initial="hidden" animate="show" className="text-center space-y-3 w-full">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-semibold tracking-wide text-primary mb-2">
+            <Crown className="w-4 h-4" />
+            AI Coaching Platform
+          </div>
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground">
+            Log Your Performance
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-muted-foreground text-sm leading-relaxed max-w-md mx-auto font-medium">
+            Enter your test data with brutal honesty. The mentor will dissect every number.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        </motion.div>
+
+        {/* Dynamic Staggered Container */}
+        <motion.div 
+          variants={containerVars} 
+          initial="hidden" 
+          animate="show" 
+          className="w-full space-y-8"
+        >
+          {/* Today's Focus Panel */}
+          {lastPerf && (
+            <motion.div variants={itemVars} className="w-full">
+              <TodaysFocus lastPerformance={lastPerf} lastFeedback={lastFeedback} streak={streak} />
+            </motion.div>
+          )}
+
+          {/* Input Form */}
+          <motion.div variants={itemVars} className="w-full">
+            <InputForm onSubmit={handleSubmit} />
+          </motion.div>
+        </motion.div>
+
       </main>
     </div>
   );
