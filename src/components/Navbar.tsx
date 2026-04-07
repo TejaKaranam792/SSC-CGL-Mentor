@@ -9,11 +9,11 @@ import { getStrictMode, setStrictMode } from "@/lib/storage";
 import { useTheme } from "@/lib/theme";
 
 const navLinks = [
-  { href: "/dashboard", label: "Log Test",  icon: PlusCircle },
-  { href: "/readiness", label: "Readiness", icon: Zap        },
-  { href: "/clarity",   label: "Clarity",   icon: Compass    },
-  { href: "/history",   label: "Analytics", icon: BarChart2  },
-  { href: "/revision",  label: "Revision",  icon: Brain      },
+  { href: "/dashboard", label: "Mock Analyzer",   icon: PlusCircle },
+  { href: "/readiness", label: "Tests",           icon: Zap        },
+  { href: "/clarity",   label: "Master Syllabus", icon: Compass    },
+  { href: "/history",   label: "Analytics",       icon: BarChart2  },
+  { href: "/revision",  label: "Revision",        icon: Brain      },
 ];
 
 export function Navbar() {

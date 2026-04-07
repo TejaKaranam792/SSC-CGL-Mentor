@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Zap, Brain, AlertTriangle, Target, Lightbulb, CheckCircle2, Bookmark, BookmarkCheck, Loader2, ChevronRight, ChevronDown } from "lucide-react";
-import { TopicIntelData, getIntelForTopic, saveIntelToCache, updateIntelStatus } from "@/lib/storage";
+import { X, Zap, Brain, AlertTriangle, Target, Lightbulb, CheckCircle2, Bookmark, BookmarkCheck, Loader2, ChevronRight, ChevronDown, PlayCircle, Eye } from "lucide-react";
+import { TopicIntelData, getIntelForTopic, saveIntelToCache, updateIntelStatus, markVideoAsWatched, hasWatchedVideo } from "@/lib/storage";
 import { cn } from "@/lib/utils";
+import { getStaticVideoForTopic, VideoRecommendation } from "@/lib/static-videos";
+import { TopicTestModal } from "./TopicTestModal";
 
 interface TopicIntelligencePanelProps {
   topic: string;
@@ -17,6 +19,10 @@ export function TopicIntelligencePanel({ topic, subject, onClose }: TopicIntelli
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [openPractice, setOpenPractice] = useState<number | null>(null);
+  const [showTestModal, setShowTestModal] = useState(false);
+  
+  const [video, setVideo] = useState<VideoRecommendation | null>(null);
+  const [isVideoWatched, setIsVideoWatched] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -28,21 +34,15 @@ export function TopicIntelligencePanel({ topic, subject, onClose }: TopicIntelli
         return;
       }
 
-      // 2. Fetch from AI
+      // 2. Fetch static intel
       try {
-        const res = await fetch("/api/intel", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ topic, subject }),
-        });
+        // Simulate a small network delay for UI UX feeling of 'loading' 
+        await new Promise(r => setTimeout(r, 600));
 
-        if (!res.ok) throw new Error("Failed to fetch topic intelligence.");
-        
-        const intelResult = await res.json();
+        const { getStaticIntel } = await import('@/lib/static-intel');
+        const intelResult = getStaticIntel(topic, subject);
         
         const fullData: TopicIntelData = {
-          topic,
-          subject,
           ...intelResult,
           status: 'none'
         };
@@ -57,6 +57,8 @@ export function TopicIntelligencePanel({ topic, subject, onClose }: TopicIntelli
     };
 
     loadData();
+    setVideo(getStaticVideoForTopic(topic, subject));
+    setIsVideoWatched(hasWatchedVideo(topic));
   }, [topic, subject]);
 
   const handleStatusUpdate = (status: 'understood' | 'revise_later' | 'none') => {
@@ -64,6 +66,11 @@ export function TopicIntelligencePanel({ topic, subject, onClose }: TopicIntelli
     const newData = { ...data, status };
     setData(newData);
     updateIntelStatus(topic, status);
+  };
+
+  const handleMarkWatched = () => {
+    markVideoAsWatched(topic);
+    setIsVideoWatched(true);
   };
 
   return (
@@ -126,6 +133,47 @@ export function TopicIntelligencePanel({ topic, subject, onClose }: TopicIntelli
                 transition={{ staggerChildren: 0.1 }}
                 className="space-y-6"
               >
+                {/* Youtube Integration */}
+                {video && (
+                  <div className="bg-gradient-to-br from-red-500/10 to-orange-500/5 border-2 border-red-500/20 rounded-3xl overflow-hidden shadow-lg p-1">
+                    <div className="p-4 border-b border-red-500/10 flex items-center justify-between">
+                      <div>
+                        <h3 className="text-sm font-black text-rose-500 uppercase tracking-wide flex items-center gap-2">
+                          <PlayCircle className="w-5 h-5" /> Best Youtube Class
+                        </h3>
+                        <p className="text-xs text-muted-foreground mt-1 font-bold">{video.whyBest}</p>
+                      </div>
+                    </div>
+                    <div className="aspect-video w-full bg-black">
+                      <iframe 
+                        className="w-full h-full"
+                        src={video.youtubeLink} 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowFullScreen>
+                      </iframe>
+                    </div>
+                    <div className="p-4 bg-black/20 flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-bold text-white">{video.title}</div>
+                        <div className="text-xs text-rose-400 font-semibold">{video.channelName}</div>
+                      </div>
+                      <button 
+                        onClick={handleMarkWatched}
+                        disabled={isVideoWatched}
+                        className={cn(
+                          "px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2",
+                          isVideoWatched ? "bg-emerald-500/20 text-emerald-400 cursor-default" : "bg-white/10 hover:bg-white/20 text-white"
+                        )}
+                      >
+                        {isVideoWatched ? <CheckCircle2 className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        {isVideoWatched ? "Watched" : "Mark as Watched"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* Overview */}
                 <div className="bg-muted p-4 rounded-2xl border border-border">
                   <h3 className="text-xs font-black text-muted-foreground uppercase tracking-wide mb-2">Quick Overview</h3>
@@ -257,7 +305,7 @@ export function TopicIntelligencePanel({ topic, subject, onClose }: TopicIntelli
           
           {/* Footer Actions */}
           {!isLoading && data && (
-            <div className="p-4 border-t border-border bg-background grid grid-cols-2 gap-3 shrink-0">
+            <div className="p-4 border-t border-border bg-background grid grid-cols-3 gap-3 shrink-0">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -280,14 +328,28 @@ export function TopicIntelligencePanel({ topic, subject, onClose }: TopicIntelli
                   "py-3 flex items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all border",
                   data.status === 'understood'
                     ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-sm"
-                    : "bg-primary text-white border-primary hover:bg-blue-600 shadow-sm"
+                    : "bg-muted text-muted-foreground border-border hover:bg-white/5"
                 )}
               >
                 <BookmarkCheck className="w-4 h-4" /> {data.status === 'understood' ? 'Understood' : 'Mark Understood'}
               </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setShowTestModal(true)}
+                className="py-3 flex items-center justify-center gap-2 rounded-xl text-sm font-black transition-all bg-primary text-primary-foreground border-primary hover:bg-blue-600 shadow-sm shadow-blue-500/20"
+              >
+                <Target className="w-4 h-4" /> Take Test Now
+              </motion.button>
             </div>
           )}
         </motion.div>
+        
+        {/* Test Modal Overlay */}
+        {showTestModal && (
+           <TopicTestModal topic={topic} subject={subject} onClose={() => setShowTestModal(false)} />
+        )}
       </div>
     </AnimatePresence>
   );

@@ -40,6 +40,11 @@ export const READINESS_TOPICS: Record<Subject, SubjectConfig> = {
       { id: 'trigonometry',       label: 'Trigonometry',              difficulty: 'hard'   },
       { id: 'si_ci',              label: 'Simple & Compound Interest', difficulty: 'easy'  },
       { id: 'data_interpretation',label: 'Data Interpretation',       difficulty: 'medium' },
+      { id: 'average',            label: 'Average',                   difficulty: 'easy'   },
+      { id: 'mixture_alligation', label: 'Mixture & Alligation',      difficulty: 'medium' },
+      { id: 'simplification',     label: 'Simplification',            difficulty: 'easy'   },
+      { id: 'lcm_hcf',            label: 'LCM & HCF',                 difficulty: 'medium' },
+      { id: 'partnership',        label: 'Partnership',               difficulty: 'medium' },
     ],
   },
   reasoning: {
@@ -61,6 +66,9 @@ export const READINESS_TOPICS: Record<Subject, SubjectConfig> = {
       { id: 'non_verbal',            label: 'Non-Verbal Reasoning',      difficulty: 'hard'   },
       { id: 'classification',        label: 'Classification',            difficulty: 'easy'   },
       { id: 'statement_conclusion',  label: 'Statement & Conclusion',    difficulty: 'hard'   },
+      { id: 'dictionary_order',      label: 'Dictionary/Word Formation', difficulty: 'easy'   },
+      { id: 'math_operations',       label: 'Mathematical Operations',   difficulty: 'medium' },
+      { id: 'clock_calendar',        label: 'Clock & Calendar',          difficulty: 'hard'   },
     ],
   },
   english: {
@@ -82,6 +90,7 @@ export const READINESS_TOPICS: Record<Subject, SubjectConfig> = {
       { id: 'idioms',                  label: 'Idioms & Phrases',          difficulty: 'medium' },
       { id: 'narration',               label: 'Narration / Voice',         difficulty: 'hard'   },
       { id: 'sentence_improvement',    label: 'Sentence Improvement',      difficulty: 'medium' },
+      { id: 'spelling',                label: 'Spelling Correction',       difficulty: 'medium' },
     ],
   },
   gs: {

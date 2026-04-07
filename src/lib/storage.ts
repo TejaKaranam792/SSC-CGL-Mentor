@@ -50,6 +50,8 @@ const BADGES_KEY      = 'ssc_badges';
 const STRICT_MODE_KEY = 'ssc_strict_mode';
 const INTEL_CACHE_KEY     = 'ssc_intel_cache';
 const REVISION_KEY        = 'ssc_revision_log';
+const DIFFICULTY_TEST_KEY = 'ssc_difficulty_tests';
+const WATCHED_VIDEO_KEY   = 'ssc_watched_videos';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function read<T>(key: string, fallback: T): T {
@@ -328,4 +330,41 @@ export const updateBestRevisionStreak = () => {
   const newBest = Math.max(current, best);
   write('ssc_rev_best_streak', newBest);
   return newBest;
+};
+
+// ─── Difficulty Tests ─────────────────────────────────────────────────────────
+export interface DifficultyPerformance {
+  id: string;
+  topic: string;
+  subject: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  score: number;
+  total: number;
+  date: string;
+}
+
+export const getDifficultyHistory = (): DifficultyPerformance[] => 
+  read<DifficultyPerformance[]>(DIFFICULTY_TEST_KEY, []);
+
+export const saveDifficultyPerformance = (perf: Omit<DifficultyPerformance, 'id' | 'date'>): DifficultyPerformance => {
+  const entry: DifficultyPerformance = { ...perf, id: Date.now().toString(), date: new Date().toISOString() };
+  const history = getDifficultyHistory();
+  history.push(entry);
+  write(DIFFICULTY_TEST_KEY, history);
+  return entry;
+};
+
+// ─── Watched Videos ───────────────────────────────────────────────────────────
+export const getWatchedVideos = (): string[] => read<string[]>(WATCHED_VIDEO_KEY, []);
+
+export const markVideoAsWatched = (topic: string) => {
+  const arr = getWatchedVideos();
+  if (!arr.includes(topic)) {
+    arr.push(topic);
+    write(WATCHED_VIDEO_KEY, arr);
+  }
+};
+
+export const hasWatchedVideo = (topic: string): boolean => {
+  return getWatchedVideos().includes(topic);
 };

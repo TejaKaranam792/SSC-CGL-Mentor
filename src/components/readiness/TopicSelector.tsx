@@ -18,6 +18,7 @@ export function TopicSelector({ onStart }: TopicSelectorProps) {
   const [microTopic, setMicroTopic] = useState<string | null>(null);
   const [mode, setMode]           = useState<'practice' | 'exam'>('practice');
   const [qCount, setQCount]       = useState<5 | 10 | 15>(10);
+  const [testDifficulty, setTestDifficulty] = useState<Difficulty | null>(null);
   const [search, setSearch]       = useState('');
 
   const subjectConfig = subject ? READINESS_TOPICS[subject] : null;
@@ -34,7 +35,7 @@ export function TopicSelector({ onStart }: TopicSelectorProps) {
       subjectLabel: subjectConfig.label,
       microTopic,
       microTopicLabel: selectedTopic.label,
-      difficulty: selectedTopic.difficulty,
+      difficulty: testDifficulty || selectedTopic.difficulty,
       mode,
       questionCount: qCount,
     });
@@ -223,6 +224,46 @@ export function TopicSelector({ onStart }: TopicSelectorProps) {
                   </span>
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Difficulty */}
+          <div>
+            <label className="block text-sm font-semibold text-muted-foreground mb-3">Difficulty Level</label>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                onClick={() => setTestDifficulty('easy')}
+                className={cn(
+                  "py-3.5 rounded-2xl border font-black text-sm transition-all",
+                  (testDifficulty || selectedTopic.difficulty) === 'easy'
+                    ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400 shadow-sm"
+                    : "bg-muted border-border text-muted-foreground hover:text-foreground hover:border-border"
+                )}
+              >
+                Easy
+              </button>
+              <button
+                onClick={() => setTestDifficulty('medium')}
+                className={cn(
+                  "py-3.5 rounded-2xl border font-black text-sm transition-all",
+                  (testDifficulty || selectedTopic.difficulty) === 'medium'
+                    ? "bg-amber-500/20 border-amber-500/40 text-amber-400 shadow-sm"
+                    : "bg-muted border-border text-muted-foreground hover:text-foreground hover:border-border"
+                )}
+              >
+                Medium
+              </button>
+              <button
+                onClick={() => setTestDifficulty('hard')}
+                className={cn(
+                  "py-3.5 rounded-2xl border font-black text-sm transition-all",
+                  (testDifficulty || selectedTopic.difficulty) === 'hard'
+                    ? "bg-rose-500/20 border-rose-500/40 text-rose-400 shadow-sm"
+                    : "bg-muted border-border text-muted-foreground hover:text-foreground hover:border-border"
+                )}
+              >
+                Hard
+              </button>
             </div>
           </div>
 
