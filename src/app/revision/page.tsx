@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Brain, Flame, Trophy, Zap, CheckCircle2, X } from "lucide-react";
 import { TopicLogger } from "@/components/revision/TopicLogger";
 import { RevisionList } from "@/components/revision/RevisionList";
+import Link from "next/link";
 import {
   getRevisions,
   getRevisionStreak,
@@ -259,6 +260,29 @@ export default function RevisionPage() {
               <span className="text-xl font-black text-foreground">{s.value}</span>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* ── Error Eliminator Promo ── */}
+        <motion.div variants={itemVars}>
+          <Link href="/eliminator" className="group block relative bg-[#150A0A] border border-rose-500/20 rounded-2xl p-6 sm:p-8 overflow-hidden shadow-2xl hover:border-rose-500/40 transition-all duration-300">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-500/60 rounded-l-2xl group-hover:bg-rose-500 transition-colors" />
+            <div className="absolute right-0 top-0 w-48 h-full bg-gradient-to-l from-rose-500/5 to-transparent pointer-events-none" />
+            
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 relative z-10 pl-2">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="p-1 px-2 border border-rose-500/30 bg-rose-500/10 rounded-md text-[10px] font-black uppercase text-rose-400 tracking-[0.2em]">New Tool</div>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-foreground mb-1 group-hover:text-rose-400 transition-colors">AI Error Eliminator</h3>
+                <p className="text-sm text-muted-foreground font-medium max-w-sm leading-relaxed">
+                  Paste your downloaded test reports. AI will instantly explain your concept gaps and generate a brutal 10-question drill.
+                </p>
+              </div>
+              <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-full border border-rose-500/30 bg-background text-rose-400 group-hover:bg-rose-500/10 group-hover:translate-x-1 transition-all">
+                <Zap className="w-5 h-5 fill-rose-400" />
+              </div>
+            </div>
+          </Link>
         </motion.div>
 
         {/* ── Pending banner + Bulk Button ─────────────────── */}
