@@ -1,9 +1,9 @@
 "use client";
 
 import { MentorFeedback, getCheckedPlans, toggleCheckedPlan } from "@/lib/storage";
-import { AlertOctagon, BrainCircuit, Activity, Crosshair, Target, LineChart, CheckCircle2, Circle, ChevronDown, ChevronUp, Zap } from "lucide-react";
+import { AlertOctagon, BrainCircuit, Activity, Crosshair, Target, LineChart, CheckCircle2, Circle, ChevronDown, ChevronUp, Zap, Download } from "lucide-react";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn, downloadAsText } from "@/lib/utils";
 
 export function MentorResponseCards({ feedback }: { feedback: MentorFeedback | null }) {
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
@@ -23,6 +23,34 @@ export function MentorResponseCards({ feedback }: { feedback: MentorFeedback | n
   const completed  = checkedItems.length;
   const totalTasks = feedback.todaysPlan.length;
   const pct = totalTasks > 0 ? Math.round((completed / totalTasks) * 100) : 0;
+
+  const handleDownload = () => {
+    const reportText = `=== SSC CGL ELITE MENTOR: DAILY PLAN ===
+Date: ${new Date().toLocaleDateString()}
+
+--- MENTOR VERDICT ---
+"${feedback.mentorMessage}"
+
+--- PERFORMANCE ANALYSIS ---
+${feedback.analysis}
+
+--- ROOT CAUSE ---
+${feedback.rootCauses}
+
+Weak Areas: ${feedback.weakAreas.join(', ')}
+
+--- 1-DAY FIX PROTOCOL ---
+${feedback.todaysPlan.map((p, i) => `${p.hour}: ${p.task}`).join('\n')}
+
+--- TARGETED DRILLS ---
+${feedback.practiceQuestions.map((q, i) => `Q${i + 1} [${q.topic}]: ${q.question}\nAnswer: ${q.answer}\nExplanation: ${q.explanation}`).join('\n\n')}
+
+--- IRONCLAD RULES ---
+${feedback.rules.map(r => `! ${r}`).join('\n')}
+=============================
+`;
+    downloadAsText(`Mentor_Plan_${Date.now()}.txt`, reportText);
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
@@ -215,6 +243,15 @@ export function MentorResponseCards({ feedback }: { feedback: MentorFeedback | n
             ))}
           </ul>
         </div>
+      </div>
+
+      <div className="flex justify-end pb-8">
+        <button
+          onClick={handleDownload}
+          className="flex items-center gap-2 px-5 py-3 rounded-2xl font-bold uppercase tracking-wide text-sm border bg-white/[0.04] border-border text-muted-foreground hover:text-foreground hover:border-border transition-all"
+        >
+          <Download className="w-4 h-4" /> Download Mentor Plan
+        </button>
       </div>
     </div>
   );

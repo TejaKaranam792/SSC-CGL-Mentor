@@ -2,10 +2,10 @@
 
 import { ReadinessSession, ReadinessAnalysis, ReadinessLevel, toggleMastered, getMasteredTopics } from "@/lib/readiness";
 import { ReadinessQuestion } from "@/lib/readiness";
-import { cn } from "@/lib/utils";
+import { cn, downloadAsText } from "@/lib/utils";
 import {
   CheckCircle2, XCircle, AlertTriangle, TrendingUp, BookOpen,
-  ChevronDown, ChevronUp, Target, Zap, Star, RotateCcw, Shield
+  ChevronDown, ChevronUp, Target, Zap, Star, RotateCcw, Shield, Download
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -160,6 +160,39 @@ export function ResultAnalysis({ session }: { session: ReadinessSession }) {
   const skipped = session.answers.filter(a => a === null).length;
   const mins = String(Math.floor(session.timeTaken / 60)).padStart(2, '0');
   const secs = String(session.timeTaken % 60).padStart(2, '0');
+
+  const handleDownload = () => {
+    const reportText = `=== SSC CGL ELITE MENTOR ===
+TEST REPORT: ${session.microTopicLabel}
+Date: ${new Date(session.completedAt ?? session.startedAt).toLocaleDateString()}
+Mode: ${session.mode}
+Accuracy: ${analysis.accuracy}%
+
+--- VERDICT ---
+"${analysis.verdict}"
+
+--- STRENGTHS ---
+${analysis.strengths.map(s => `+ ${s}`).join('\n')}
+
+--- WEAKNESSES ---
+${analysis.weaknesses.map(w => `- ${w}`).join('\n')}
+
+--- CONCEPT GAPS ---
+${analysis.conceptGaps.map(g => `* ${g}`).join('\n')}
+
+--- TRAP AWARENESS ---
+${analysis.trapAwareness.map(t => `! ${t}`).join('\n')}
+
+--- IMPROVEMENT PLAN ---
+${analysis.improvementPlan.revisionStrategy}
+
+Daily Target: ${analysis.improvementPlan.practiceCount} questions/day
+Focus Areas:
+${analysis.improvementPlan.whatToStudy.map((s, i) => `${i + 1}. ${s}`).join('\n')}
+=============================
+`;
+    downloadAsText(`Test_Report_${session.microTopic}_${Date.now()}.txt`, reportText);
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-500">
@@ -336,6 +369,12 @@ export function ResultAnalysis({ session }: { session: ReadinessSession }) {
         >
           <Star className={cn("w-4 h-4", mastered ? "text-emerald-400 fill-emerald-400" : "")} />
           {mastered ? 'Mastered ✓' : 'Mark Mastered'}
+        </button>
+        <button
+          onClick={handleDownload}
+          className="flex items-center gap-2 px-5 py-3 rounded-2xl font-bold uppercase tracking-wide text-sm border bg-white/[0.04] border-border text-muted-foreground hover:text-foreground hover:border-border transition-all ml-auto"
+        >
+          <Download className="w-4 h-4" /> Download Report
         </button>
       </div>
     </div>
