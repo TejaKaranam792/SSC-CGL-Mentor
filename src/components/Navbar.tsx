@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Crown, PlusCircle, BarChart2, Sword, Sun, Moon, Zap, Compass, Brain } from "lucide-react";
+import { Crown, PlusCircle, BarChart2, Sword, Sun, Moon, Zap, Compass, Brain, GraduationCap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getStrictMode, setStrictMode } from "@/lib/storage";
 import { useTheme } from "@/lib/theme";
 
 const navLinks = [
   { href: "/dashboard", label: "Mock Analyzer",   icon: PlusCircle },
+  { href: "/ai-teacher", label: "AI Teacher",     icon: GraduationCap },
   { href: "/readiness", label: "Tests",           icon: Zap        },
   { href: "/clarity",   label: "Master Syllabus", icon: Compass    },
   { href: "/history",   label: "Analytics",       icon: BarChart2  },
