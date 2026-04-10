@@ -46,6 +46,12 @@ const VIDEO_DATABASE: Record<string, VideoRecommendation> = {
     youtubeLink: "https://www.youtube.com/embed/4yZJ1_yMwG4",
     whyBest: "Abhinay Sharma focuses on visual understanding and deep conceptual clarity."
   },
+  "Pipes & Cistern": {
+    title: "Pipe and Cistern Complete Concept | Week 4",
+    channelName: "Aditya Ranjan Sir Maths",
+    youtubeLink: "https://www.youtube.com/embed/Fj7n0d3p1Y0",
+    whyBest: "Direct application of Time & Work concepts. Aditya Ranjan sir explains the 'negative work' of outlet pipes perfectly."
+  },
   
   // --- Reasoning ---
   "Syllogism": {

@@ -33,6 +33,7 @@ export const READINESS_TOPICS: Record<Subject, SubjectConfig> = {
       { id: 'algebra',            label: 'Algebra',                   difficulty: 'hard'   },
       { id: 'geometry',           label: 'Geometry',                  difficulty: 'hard'   },
       { id: 'time_work',          label: 'Time & Work',               difficulty: 'medium' },
+      { id: 'pipes_cistern',      label: 'Pipes & Cistern',           difficulty: 'medium' },
       { id: 'speed_distance',     label: 'Speed & Distance',          difficulty: 'medium' },
       { id: 'number_system',      label: 'Number System',             difficulty: 'hard'   },
       { id: 'profit_loss',        label: 'Profit & Loss',             difficulty: 'easy'   },

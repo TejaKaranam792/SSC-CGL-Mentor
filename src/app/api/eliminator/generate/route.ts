@@ -39,7 +39,7 @@ Your task is to help the user completely eliminate the errors found in this repo
 Return a JSON object containing 'explanation' and 'questions'.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.1-flash-lite-preview",
+      model: "gemini-2.0-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",

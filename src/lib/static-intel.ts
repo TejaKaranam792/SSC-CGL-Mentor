@@ -44,6 +44,41 @@ export function getStaticIntel(topic: string, subject: string): Omit<TopicIntelD
     };
   }
 
+  if (normalizedTopic.includes("pipe") || normalizedTopic.includes("cistern")) {
+    return {
+      topic,
+      subject,
+      overview: "Pipes and Cistern is a direct extension of Time & Work, where output pipes perform 'negative work'.",
+      coreRules: [
+        "Inlet pipes (filling) are positive work (+).",
+        "Outlet pipes (emptying) are negative work (-).",
+        "Total capacity of the tank is the LCM of time taken by individual pipes.",
+      ],
+      shortcuts: [
+        "Formula: If pipe A fills in 'x' hours and pipe B empties in 'y' hours, net work in 1 hour = (1/x - 1/y).",
+        "Use fractional values or LCM units to avoid complex calculations.",
+      ],
+      traps: [
+        "Filling vs. Emptying: Always check if the question says the tank was initially full or empty.",
+        "Leakage: A leak is just an outlet pipe that works continuously.",
+      ],
+      examStrategy: [
+        "Solve these alongside Time & Work questions as the logic is identical.",
+        "Watch out for questions where pipes are opened alternately.",
+      ],
+      memoryHacks: [
+        "Think of empty pipes as 'thieves' stealing the water that filling pipes 'earn'.",
+      ],
+      miniPractice: [
+        {
+          question: "Pipe A fills a tank in 10h, Pipe B empties it in 15h. In how many hours will the tank be full if both are opened?",
+          answer: "30 hours",
+          explanation: "LCM(10, 15) = 30 units. A=3 u/h, B=-2 u/h. Net = 1 u/h. Time = 30/1 = 30h."
+        }
+      ]
+    };
+  }
+
   if (normalizedTopic.includes("trigo") || normalizedTopic.includes("quant")) {
     return {
       topic,

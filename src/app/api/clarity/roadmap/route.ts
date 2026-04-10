@@ -36,7 +36,7 @@ Rule 3: Give 1 specific reason why hitting this target is realistic if they foll
 Return strict JSON format with exactly these fields.`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.1-flash-lite-preview',
+      model: 'gemini-2.0-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
