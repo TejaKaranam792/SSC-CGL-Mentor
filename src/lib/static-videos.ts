@@ -52,6 +52,18 @@ const VIDEO_DATABASE: Record<string, VideoRecommendation> = {
     youtubeLink: "https://www.youtube.com/embed/Fj7n0d3p1Y0",
     whyBest: "Direct application of Time & Work concepts. Aditya Ranjan sir explains the 'negative work' of outlet pipes perfectly."
   },
+  "Speed & Distance": {
+    title: "Day 42 | Time, Speed & Distance | Maths | 45 Din 45 Marathon",
+    channelName: "Rankers Gurukul / Aditya Ranjan Sir",
+    youtubeLink: "https://www.youtube.com/embed/kY0q8T8Dk6U",
+    whyBest: "Comprehensive one-shot coverage of TSD, Trains, and Relative Speed with exam-oriented shortcuts."
+  },
+  "Mensuration": {
+    title: "Complete Mensuration (2D & 3D) In One Class",
+    channelName: "Abhinay Maths",
+    youtubeLink: "https://www.youtube.com/embed/Fj2F1b07Cj8",
+    whyBest: "Abhinay sir's visualization of 3D shapes and formula-free approaches for certain problems is elite."
+  },
   
   // --- Reasoning ---
   "Syllogism": {

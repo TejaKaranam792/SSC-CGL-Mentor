@@ -79,6 +79,78 @@ export function getStaticIntel(topic: string, subject: string): Omit<TopicIntelD
     };
   }
 
+  if (normalizedTopic.includes("speed") || normalizedTopic.includes("distance") || normalizedTopic.includes("train")) {
+    return {
+      topic,
+      subject,
+      overview: "Time, Speed & Distance (TSD) is a foundational arithmetic topic covering relative speed, trains, and boats & streams.",
+      coreRules: [
+        "Core Formula: Distance = Speed × Time.",
+        "Unit Conversion: 1 km/h = 5/18 m/s; 1 m/s = 18/5 km/h.",
+        "Relative Speed: Add speeds if moving toward each other; subtract if moving in same direction.",
+      ],
+      shortcuts: [
+        "Average Speed = 2xy / (x + y) when distance is constant.",
+        "Ratio Method: If distance is constant, Speed ∝ 1/Time.",
+        "Boats: Speed Downstream = u + v; Speed Upstream = u - v.",
+      ],
+      traps: [
+        "Unit Mismatch: Mixing km and seconds—always normalize units first.",
+        "Train Length: When a train crosses a platform, Distance = Train Length + Platform Length.",
+      ],
+      examStrategy: [
+        "Identify if speed, distance, or time is constant to apply ratio shortcuts.",
+        "Draw a simple line diagram for meeting point problems.",
+      ],
+      memoryHacks: [
+        "Think of 'D' as the 'Dad' (Top of the triangle) in D = S × T.",
+      ],
+      miniPractice: [
+        {
+          question: "A train 150m long crosses a pole in 9s. Find its speed in km/h.",
+          answer: "60 km/h",
+          explanation: "Speed = 150/9 = 50/3 m/s. In km/h: (50/3) × (18/5) = 10 × 6 = 60 km/h."
+        }
+      ]
+    };
+  }
+
+  if (normalizedTopic.includes("mensuration")) {
+    return {
+      topic,
+      subject,
+      overview: "Mensuration tests your knowledge of 2D areas and 3D volumes. Accuracy in calculation is as vital as formula memory.",
+      coreRules: [
+        "2D: Square, Rectangle, Circle, Triangle (Heron's formula).",
+        "3D: Cube, Cuboid, Cylinder, Cone, Sphere.",
+        "Pythagorean triplets are essential for diagonal and slant height calculations.",
+      ],
+      shortcuts: [
+        "Divisibility by 11: Since π ≈ 22/7, if an option is the only one divisible by 11, it is likely the answer for circles/cylinders.",
+        "Unit Digit: Use the last digit of calculations to eliminate options quickly.",
+        "Successive % change for Area (x + y + xy/100).",
+      ],
+      traps: [
+        "Radius vs Diameter: Always check which one is given—common 'silly mistake' trap.",
+        "Internal vs External dimensions in hollow shapes.",
+      ],
+      examStrategy: [
+        "Memorize the first 15 squares and cubes to speed up volume calculations.",
+        "Flag complex combination shapes (e.g., cone on hemisphere) for the second pass.",
+      ],
+      memoryHacks: [
+        "Visualize shapes as 'stacking' 2D slices—a cylinder is just a stack of circles (πr² × h).",
+      ],
+      miniPractice: [
+        {
+          question: "Find the volume of a sphere with radius 21 cm.",
+          answer: "38808 cm³",
+          explanation: "Volume = (4/3)πr³ = (4/3) × (22/7) × 21 × 21 × 21 = 88 × 441 = 38808."
+        }
+      ]
+    };
+  }
+
   if (normalizedTopic.includes("trigo") || normalizedTopic.includes("quant")) {
     return {
       topic,
