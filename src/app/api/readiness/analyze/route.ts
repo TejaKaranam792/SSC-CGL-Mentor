@@ -54,7 +54,7 @@ Analyze deeply. Rules:
 - verdict: 1 sharp sentence — assessment of where the student stands`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3.1-flash-lite-preview',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',

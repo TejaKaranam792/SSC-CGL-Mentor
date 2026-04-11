@@ -11,8 +11,8 @@ export async function POST(req: NextRequest) {
 
     const ai = new GoogleGenAI({ apiKey });
 
-    // Ensure model selection is fallback-safe (switched to 2.0-flash as 3.1 was unstable)
-    const model = "gemini-2.0-flash";
+    // Ensure model selection is fallback-safe (switched to 3.1-flash-lite-preview as requested)
+    const model = "gemini-3.1-flash-lite-preview";
     
     let prompt = "";
     let responseSchema: any = {};
