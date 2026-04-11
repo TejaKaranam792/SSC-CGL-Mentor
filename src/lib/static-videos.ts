@@ -52,7 +52,7 @@ const VIDEO_DATABASE: Record<string, VideoRecommendation> = {
     youtubeLink: "https://www.youtube.com/embed/Fj7n0d3p1Y0",
     whyBest: "Direct application of Time & Work concepts. Aditya Ranjan sir explains the 'negative work' of outlet pipes perfectly."
   },
-  "Speed & Distance": {
+  "Time, Speed & Distance": {
     title: "Day 42 | Time, Speed & Distance | Maths | 45 Din 45 Marathon",
     channelName: "Rankers Gurukul / Aditya Ranjan Sir",
     youtubeLink: "https://www.youtube.com/embed/kY0q8T8Dk6U",
